@@ -18,7 +18,7 @@ const getTeam = async (req, res) => {
 // Add team
 const createTeam = async (req, res) => {
     const { name, logo, description, country } = req.body;
-    const { data, error } = await supabase.insert([{ name, logo, description, country }]);
+    const { data, error } = await supabase.from('teams').insert([{ name, logo, description, country }]);
     if (error) return res.status(500).json({ error: error.message });
     res.status(201).json(data);
 };
@@ -27,7 +27,7 @@ const createTeam = async (req, res) => {
 const updateTeam = async (req, res) => {
     const { id } = req.params;
     const { name, logo, description, country } = req.body;
-    const { data, error } = await supabase.update({ name, logo, description, country }).eq('id', id);
+    const { data, error } = await supabase.from('teams').update({ name, logo, description, country }).eq('id', id);
     if (error) return res.status(500).json({ error: error.message });
     res.json(data);
 };
